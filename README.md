@@ -14,9 +14,19 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/template
 
 ## Available Templates
 
+#### py-package
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" _ -t py-package -s '{"name": "foo"}'
+```
+
+#### rb-gem
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" _ -t rb-gem -s '{"name": "foo"}'
+```
+
 #### cocoapods-plugin
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" _ -t cocoapods-plugin -s '{"name": "cocoapods-foo"}'
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" _ -t cocoapods-plugin -s '{"name": "foo"}'
 ```
 
 ### linters
