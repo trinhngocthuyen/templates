@@ -11,7 +11,7 @@ done
 
 WORKING_DIR="${WORKING_DIR:-$(PWD)}"
 TMP_DIR=$(mktemp -d -t templates)
-REPO_DIR=${TMP_DIR}/templates
+REPO_DIR=${REPO_DIR:-${TMP_DIR}/templates}
 TEMPLATE=${TEMPLATE:--}
 TEMPLATE_REPO_URL=git@github.com:trinhngocthuyen/templates.git
 trap "rm -rf ${TMP_DIR}" EXIT

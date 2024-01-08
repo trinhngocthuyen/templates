@@ -6,16 +6,19 @@ from pathlib import Path
 import jinja2
 
 
-def sub_content(dir: str, context: dict):
-    print(f'-> Substitute content with context: {context}')
+def sub_content(dir: str, ctx: str | dict):
+    if isinstance(ctx, str):
+        ctx = json.loads(ctx)
+        print(f'ctx: {ctx}')
+    print(f'-> Substitute content with context: {ctx}')
     def include_path(p: str) -> bool:
         return not p.startswith('.git/') and not p.startswith('.github/')
 
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(dir))
     for path in env.list_templates(filter_func=include_path):
         try:
-            rendered = env.get_template(path).render(context)
-            new_path = jinja2.Template(path).render(context)
+            rendered = env.get_template(path).render(ctx)
+            new_path = jinja2.Template(path).render(ctx)
             path = Path(dir) / path
             new_path = Path(dir) / new_path
             new_path.parent.mkdir(parents=True, exist_ok=True)
@@ -30,4 +33,4 @@ if __name__ == '__main__':
     parser.add_argument('--dir', default='.', type=str, help='Dir to sub')
     parser.add_argument('--map', required=True, type=str, help='Content mapping')
     args = parser.parse_args()
-    sub_content(dir=args.dir, context=json.loads(args.map))
+    sub_content(dir=args.dir, ctx=args.map)
