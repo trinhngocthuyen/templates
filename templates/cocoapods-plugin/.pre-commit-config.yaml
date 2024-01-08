@@ -4,6 +4,9 @@ repos:
     rev: v4.5.0
     hooks:
       - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-xml
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/rubocop/rubocop
@@ -14,4 +17,3 @@ repos:
     rev: 0.52.11
     hooks:
       - id: swiftformat
-        files: examples

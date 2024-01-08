@@ -12,10 +12,6 @@ Gemspec/RequiredRubyVersion:
 Gemspec/RequireMFA:
   Enabled: false
 
-Naming/FileName:
-  Exclude:
-    - lib/cocoapods-spm.rb
-
 Metrics/AbcSize:
   Enabled: false
 

@@ -12,7 +12,7 @@ ansi_color() {
         shift 1
         ;;
     esac
-    echo "\033[${color_code}$@\033[0m"
+    echo -e "\033[${color_code}$@\033[0m"
 }
 log() { ansi_color $@ ; }
 log_debug() { log 37m $@ ; }
