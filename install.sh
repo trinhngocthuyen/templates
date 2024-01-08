@@ -46,4 +46,4 @@ fill_placeholder_contents() {
 
 log_info -b "Unpacking template: ${TEMPLATE}..."
 fill_placeholder_contents
-cp -r "${TEMPLATE_UNPACKED_TMP_DIR}/" "${WORKING_DIR}"
+rsync --exclude=**/{.git,.build,__pycache__} -ra "${TEMPLATE_UNPACKED_TMP_DIR}/" "${WORKING_DIR}"
