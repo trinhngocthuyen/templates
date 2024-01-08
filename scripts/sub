@@ -9,7 +9,7 @@ import jinja2
 def sub_content(dir: str, context: dict):
     print(f'-> Substitute content with context: {context}')
     def include_path(p: str) -> bool:
-        return not p.startswith('.git')
+        return not p.startswith('.git/') and not p.startswith('.github/')
 
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(dir))
     for path in env.list_templates(filter_func=include_path):
