@@ -3,7 +3,7 @@ use_frameworks!
 
 @checksum = "dummy-checksum-to-prevent-merge-conflicts"
 
-plugin "cocoapods-{{name}}"
+plugin "{{name}}"
 
 config_compact_spec(
   extra: ->(s) { s.ios.deployment_target = "16.0" }

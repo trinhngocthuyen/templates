@@ -14,7 +14,7 @@ Gemspec/RequireMFA:
 
 Naming/FileName:
   Exclude:
-    - lib/cocoapods-{{name}}.rb
+    - lib/{{name}}.rb
 
 Metrics/AbcSize:
   Enabled: false

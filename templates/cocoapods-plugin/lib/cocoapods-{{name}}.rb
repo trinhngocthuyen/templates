@@ -1,1 +1,1 @@
-require "cocoapods-{{name}}/gem_version"
+require "{{name}}/gem_version"

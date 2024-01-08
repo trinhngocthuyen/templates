@@ -1,4 +1,4 @@
-# Demo for cocoapods-{{name}} Integration
+# Demo for {{name}} Integration
 
 ## Highlights
 

@@ -1,5 +1,5 @@
-require "cocoapods-{{name}}/main"
+require "{{name}}/main"
 
-Pod::HooksManager.register("cocoapods-{{name}}", :post_install) do |context|
+Pod::HooksManager.register("{{name}}", :post_install) do |context|
   # Code goes here
 end
