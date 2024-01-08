@@ -29,7 +29,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/template
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" _ -t cocoapods-plugin -s '{"name": "foo"}'
 ```
 
-### linters
+#### linters
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" _ -t linters
 ```
