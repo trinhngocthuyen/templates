@@ -4,15 +4,16 @@ set -e
 while getopts "t:d:s:" flag; do
     case ${flag} in
     t) TEMPLATE=${OPTARG};;
-    d) REPO_DIR=${OPTARG};;
+    d) WORKING_DIR=${OPTARG};;
     s) SUBSTITUTE_CONTENT=${OPTARG};;
     esac
 done
 
-REPO_DIR=${REPO_DIR:-/var/tmp/templates}
+WORKING_DIR="${WORKING_DIR:-$(PWD)}"
+TMP_DIR=$(mktemp -d -t templates)
+REPO_DIR=${TMP_DIR}/templates
 TEMPLATE=${TEMPLATE:--}
 TEMPLATE_REPO_URL=git@github.com:trinhngocthuyen/templates.git
-TMP_DIR=$(mktemp -d -t templates)
 trap "rm -rf ${TMP_DIR}" EXIT
 
 if [[ "${CLONE}" != "false" ]]; then
@@ -20,7 +21,7 @@ if [[ "${CLONE}" != "false" ]]; then
     git clone --single-branch --depth=1 ${TEMPLATE_REPO_URL} ${REPO_DIR}
 fi
 
-source "${REPO_DIR}/scripts/base.sh"
+source "${REPO_DIR}/scripts/base"
 TEMPLATE_DIR="${REPO_DIR}/templates/${TEMPLATE}"
 TEMPLATE_UNPACKED_TMP_DIR="${TMP_DIR}/template-unpacked"
 
@@ -39,10 +40,10 @@ fill_placeholder_contents() {
     if [[ ! -z ${SUBSTITUTE_CONTENT} ]]; then
         log_debug "Filling placeholder contents..."
         pip3 show jinja2 &> /dev/null || pip3 install jinja2
-	    python3 "${REPO_DIR}/scripts/sub.py" --dir "${TEMPLATE_UNPACKED_TMP_DIR}" --map "${SUBSTITUTE_CONTENT}"
+	    "${REPO_DIR}/scripts/sub" --dir "${TEMPLATE_UNPACKED_TMP_DIR}" --map "${SUBSTITUTE_CONTENT}"
     fi
 }
 
 log_info -b "Unpacking template: ${TEMPLATE}..."
 fill_placeholder_contents
-cp -r "${TEMPLATE_UNPACKED_TMP_DIR}/" .
+cp -r "${TEMPLATE_UNPACKED_TMP_DIR}/" "${WORKING_DIR}"
