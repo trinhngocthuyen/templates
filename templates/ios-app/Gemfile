@@ -1,0 +1,8 @@
+source "https://rubygems.org"
+
+gem "cocoapods"
+
+group :development do
+  gem "pry-nav"
+  gem "rubocop"
+end

@@ -10,6 +10,13 @@ import typing as t
 import jinja2
 
 
+def non_empty_input(msg: str) -> str:
+    value = ''
+    while value == '':
+        value = input(msg).strip()
+    return value
+
+
 class Main:
     def __init__(self, **kwargs) -> None:
         self.name: str = kwargs.get('name')
@@ -41,10 +48,10 @@ class Main:
 
         missing = {k: v for k, v in self.metadata.get('replace', {}).items() if k not in ctx }
         for key, desc in missing.items():
-            ctx[key] = input(
+            ctx[key] = non_empty_input(
                 f'\033[33mReplacing templated contents requires key: "{key}" ({desc})\n'
                 f'\033[35mInput the value for "{key}": \033[0m'
-            ).strip()
+            )
         print(f'-> Replace contents with context: {ctx}')
         return ctx
 
