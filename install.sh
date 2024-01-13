@@ -7,14 +7,13 @@ run() {
         -t|--template) TEMPLATE="$2"; shift 2; ;;
         -d|--dir) WORKING_DIR="$2"; shift 2; ;;
         -s|--sub) SUBSTITUTE_CONTENT="$2"; shift 2; ;;
-        *) ;;
+        *) shift ;;
         esac
     done
 
     WORKING_DIR="${WORKING_DIR:-$(PWD)}"
     TMP_DIR=$(mktemp -d -t templates)
     REPO_DIR=${REPO_DIR:-${TMP_DIR}/templates}
-    TEMPLATE=${TEMPLATE:--}
     TEMPLATE_REPO_URL=git@github.com:trinhngocthuyen/templates.git
     trap "rm -rf ${TMP_DIR}" EXIT
 
@@ -24,15 +23,21 @@ run() {
     fi
 
     source "${REPO_DIR}/scripts/base"
+    log_debug "Repo dir: ${REPO_DIR}"
+
+    AVAILABLE_TEMPLATES=$(find "${REPO_DIR}/templates" -depth 1 -type d -not -name _metadata | xargs -I x basename x)
+    if [[ -z "${TEMPLATE}" ]]; then
+        log_warning "What template to use? Available templates: ${AVAILABLE_TEMPLATES}"
+        read_input "Enter the template name" TEMPLATE
+    fi
+    log_debug "Template: ${TEMPLATE}"
+
     TEMPLATE_DIR="${REPO_DIR}/templates/${TEMPLATE}"
     TEMPLATE_UNPACKED_TMP_DIR="${TMP_DIR}/template-unpacked"
 
-    log_debug "Repo dir: ${REPO_DIR}"
-    log_debug "Template: ${TEMPLATE}"
-
     if [[ ! -d "${TEMPLATE_DIR}" ]]; then
         log_error -b "No such template: ${TEMPLATE}!"
-        log_error -b "Available templates: $(find "${REPO_DIR}/templates" -depth 1 -type d | xargs -I x basename x)"
+        log_error -b "Available templates: ${AVAILABLE_TEMPLATES}"
         exit 1
     fi
 

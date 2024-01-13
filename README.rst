@@ -4,21 +4,11 @@ Project Templates
 Usage
 -----
 
-To install a given template:
+Run the following script and follow the prompts to install your desired template.
 
 .. code-block:: bash
 
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" \
-        -t <TEMPLATE_NAME> \
-        -s <SUBSTITUTE_CONTENT>
-
-For example, to create a CocoaPods plugin named `cocoapods-foo`:
-
-.. code-block:: bash
-
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" \
-        -t cocoapods-plugin \
-        -s '{"name": "cocoapods-foo"}'
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/main/install.sh)"
 
 Available Templates
 -------------------
@@ -26,25 +16,14 @@ Available Templates
 .. list-table::
     :header-rows: 1
 
-    * -  Template
-      -  Code
+    * - Template
+      - Description
 
-    * -  py-package
-      -  .. code-block:: bash
-
-            bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" -t py-package
-
+    * - py-package
+      - Create a Python package
     * - rb-gem
-      - .. code-block:: bash
-
-            bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" -t rb-gem
-
+      - Create a Ruby gem
     * - cocoapods-plugin
-      - .. code-block:: bash
-
-            bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" -t cocoapods-plugin
-
+      - Create a CocoaPods plugin
     * - linters
-      - .. code-block:: bash
-
-            bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" -t linters
+      - Set up some linters for your project

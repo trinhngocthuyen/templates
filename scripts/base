@@ -20,7 +20,7 @@ log_info() { log 32m $@ ; }
 log_warning() { log 33m $@ ; }
 log_error() { log 31m $@ ; }
 
-read_input() { read -p "$(log_debug -b "$1: ") " "$2" ; }
+read_input() { read -p "$(log 35m -b "$1: ") " "$2" ; }
 confirm() {
     local flag=${2:-flagval}
     read_input "$1 [Y/n]" ${flag};
