@@ -2,6 +2,8 @@
 import json
 from argparse import ArgumentParser
 from functools import cached_property
+import os
+import shutil
 from pathlib import Path
 import typing as t
 
@@ -13,6 +15,7 @@ class Main:
         self.name: str = kwargs.get('name')
         self.dir: Path = Path(kwargs.get('dir'))
         self.replace: str = kwargs.get('replace')
+        self.templated_paths: t.List[t.Tuple[Path, Path]] = []
 
     @cached_property
     def metadata(self) -> t.Dict[str, t.Any]:
@@ -50,17 +53,33 @@ class Main:
         original_path.write_text(content.strip() + '\n')
         original_path.rename(new_path)
 
+    def clean_up_templated_dir(self):
+        for original_path, new_path in self.templated_paths:
+            parent = Path(os.path.commonpath([original_path, new_path]))
+            try:
+                shutil.rmtree(next(p for p in original_path.parents if p.parent == parent))
+            except:
+                pass
+
+    def render_content(self):
+        pass
+
     def run(self):
         ctx = self.load_replace_ctx()
         for path in self.jinja_list_templates():
             try:
+                original_path: Path = self.dir / path
+                new_path: Path = self.dir / jinja2.Template(path).render(ctx)
+                if original_path != new_path:
+                    self.templated_paths.append((original_path, new_path))
                 self.apply_rendered(
                     content=self.jinja_env.get_template(path).render(ctx),
-                    original_path=self.dir / path,
-                    new_path=self.dir / jinja2.Template(path).render(ctx)
+                    original_path=original_path,
+                    new_path=new_path
                 )
             except:
                 pass
+        self.clean_up_templated_dir()
 
 
 if __name__ == '__main__':
