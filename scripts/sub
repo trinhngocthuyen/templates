@@ -1,37 +1,72 @@
 #!/usr/bin/env python3
 import json
 from argparse import ArgumentParser
+from functools import cached_property
 from pathlib import Path
+import typing as t
 
 import jinja2
 
 
-def sub_content(dir: str, ctx: str | dict):
-    if isinstance(ctx, str):
-        ctx = json.loads(ctx)
-    print(f'-> Substitute content with context: {ctx}')
-    def include_path(p: str) -> bool:
-        return \
-            not p.startswith('.git/') \
-            and not p.startswith('.github/')
+class Main:
+    def __init__(self, **kwargs) -> None:
+        self.name: str = kwargs.get('name')
+        self.dir: Path = Path(kwargs.get('dir'))
+        self.replace: str = kwargs.get('replace')
 
-    env = jinja2.Environment(loader=jinja2.FileSystemLoader(dir))
-    for path in env.list_templates(filter_func=include_path):
+    @cached_property
+    def metadata(self) -> t.Dict[str, t.Any]:
+        path = Path(__file__).parent.parent / f'templates/_metadata/{self.name}.json'
+        return json.loads(path.read_text())
+
+    @cached_property
+    def jinja_env(self) -> jinja2.Environment:
+        return jinja2.Environment(loader=jinja2.FileSystemLoader(self.dir))
+
+    def jinja_list_templates(self) -> t.List[str]:
+        def include_path(p: str) -> bool:
+            return \
+                not p.startswith('.git/') \
+                and not p.startswith('.github/')
+        return self.jinja_env.list_templates(filter_func=include_path)
+
+    def load_replace_ctx(self) -> t.Dict[str, str]:
         try:
-            rendered = env.get_template(path).render(ctx)
-            new_path = jinja2.Template(path).render(ctx)
-            path = Path(dir) / path
-            new_path = Path(dir) / new_path
-            new_path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(rendered.strip() + '\n')
-            path.rename(new_path)
+            ctx: dict = json.loads(self.replace)
         except:
-            pass
+            ctx = {}
+
+        missing = {k: v for k, v in self.metadata.get('replace', {}).items() if k not in ctx }
+        for key, desc in missing.items():
+            ctx[key] = input(
+                f'\033[33mReplacing templated contents requires key: "{key}" ({desc})\n'
+                f'\033[35mInput the value for "{key}": \033[0m'
+            ).strip()
+        print(f'-> Replace contents with context: {ctx}')
+        return ctx
+
+    def apply_rendered(self, content: str, original_path: Path, new_path: Path):
+        new_path.parent.mkdir(parents=True, exist_ok=True)
+        original_path.write_text(content.strip() + '\n')
+        original_path.rename(new_path)
+
+    def run(self):
+        ctx = self.load_replace_ctx()
+        for path in self.jinja_list_templates():
+            try:
+                self.apply_rendered(
+                    content=self.jinja_env.get_template(path).render(ctx),
+                    original_path=self.dir / path,
+                    new_path=self.dir / jinja2.Template(path).render(ctx)
+                )
+            except:
+                pass
 
 
 if __name__ == '__main__':
     parser = ArgumentParser()
+    parser.add_argument('--name', type=str, help='Template name')
     parser.add_argument('--dir', default='.', type=str, help='Dir to sub')
-    parser.add_argument('--map', required=True, type=str, help='Content mapping')
+    parser.add_argument('--replace', required=True, type=str, help='Content mapping')
     args = parser.parse_args()
-    sub_content(dir=args.dir, ctx=args.map)
+    Main(**vars(args)).run()

@@ -1,0 +1,5 @@
+{
+    "replace": {
+        "name": "Name of the plugin (ex. cocoapods-foo)"
+    }
+}

@@ -32,26 +32,19 @@ Available Templates
     * -  py-package
       -  .. code-block:: bash
 
-            bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" \
-                -t py-package \
-                -s '{"name": "foo"}'
+            bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" -t py-package
 
     * - rb-gem
       - .. code-block:: bash
 
-            bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" \
-                -t rb-gem \
-                -s '{"name": "foo"}'
+            bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" -t rb-gem
 
     * - cocoapods-plugin
       - .. code-block:: bash
 
-            bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" \
-                -t cocoapods-plugin \
-                -s '{"name": "foo"}'
+            bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" -t cocoapods-plugin
 
     * - linters
       - .. code-block:: bash
 
-            bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" \
-                -t linters
+            bash -c "$(curl -fsSL https://raw.githubusercontent.com/trinhngocthuyen/templates/HEAD/install.sh)" -t linters

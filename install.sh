@@ -1,14 +1,13 @@
 #!/bin/bash
 set -e
 
-if [[ "$0" = *install.sh ]]; then args=$@; else args="$0 $@"; fi
-
 run() {
-    while getopts "t:d:s:" flag; do
-        case ${flag} in
-        t) TEMPLATE=${OPTARG};;
-        d) WORKING_DIR=${OPTARG};;
-        s) SUBSTITUTE_CONTENT=${OPTARG};;
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+        -t|--template) TEMPLATE="$2"; shift 2; ;;
+        -d|--dir) WORKING_DIR="$2"; shift 2; ;;
+        -s|--sub) SUBSTITUTE_CONTENT="$2"; shift 2; ;;
+        *) ;;
         esac
     done
 
@@ -40,11 +39,9 @@ run() {
     fill_placeholder_contents() {
         rm -rf "${TEMPLATE_UNPACKED_TMP_DIR}"
         cp -r "${TEMPLATE_DIR}/" "${TEMPLATE_UNPACKED_TMP_DIR}"
-        if [[ ! -z ${SUBSTITUTE_CONTENT} ]]; then
-            log_debug "Filling placeholder contents..."
-            pip3 show jinja2 &> /dev/null || pip3 install jinja2
-            "${REPO_DIR}/scripts/sub" --dir "${TEMPLATE_UNPACKED_TMP_DIR}" --map "${SUBSTITUTE_CONTENT}"
-        fi
+        log_debug "Filling placeholder contents..."
+        pip3 show jinja2 &> /dev/null || pip3 install jinja2
+        "${REPO_DIR}/scripts/sub" --name ${TEMPLATE} --dir "${TEMPLATE_UNPACKED_TMP_DIR}" --replace "${SUBSTITUTE_CONTENT}"
     }
 
     log_info -b "Unpacking template: ${TEMPLATE}..."
@@ -52,4 +49,8 @@ run() {
     rsync --exclude=**/{.git,.build,__pycache__} -ra "${TEMPLATE_UNPACKED_TMP_DIR}/" "${WORKING_DIR}"
 }
 
-run ${args}
+if [[ "$0" = *install.sh ]]; then
+    run "$@"
+else
+    run "$0" "$@"
+fi
