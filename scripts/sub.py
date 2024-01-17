@@ -93,6 +93,6 @@ if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('--name', type=str, help='Template name')
     parser.add_argument('--dir', default='.', type=str, help='Dir to sub')
-    parser.add_argument('--replace', required=True, type=str, help='Content mapping')
+    parser.add_argument('--replace', type=str, help='Content mapping')
     args = parser.parse_args()
     Main(**vars(args)).run()
