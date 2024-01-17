@@ -17,23 +17,6 @@ function templates {
     _templates::$command "$@"
 }
 
-function _templates {
-    local -a cmds
-    cmds=(
-        'help:Usage information'
-        'list:List available templates'
-        'use:Use a template'
-        'update:Update templates'
-    )
-    if (( CURRENT == 2 )); then
-        _describe 'command' cmds
-    fi
-}
-
-if (( ${+functions[compdef]} )); then
-    compdef _templates templates
-fi
-
 function _templates::help {
     cat >&2 <<EOF
 Usage: templates <command> [options]
