@@ -31,7 +31,7 @@ EOF
 }
 
 function _templates::list {
-    find "$(_templates::dir)/templates" -depth 1 -type d -not -name _metadata -exec basename {} \;
+    find "$(_templates::dir)/templates" -depth 1 -type d -exec basename {} \;
 }
 
 function _templates::use {

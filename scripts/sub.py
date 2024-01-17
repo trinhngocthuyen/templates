@@ -26,7 +26,7 @@ class Main:
 
     @cached_property
     def metadata(self) -> t.Dict[str, t.Any]:
-        path = Path(__file__).parent.parent / f'templates/_metadata/{self.name}.json'
+        path = Path(__file__).parent.parent / f'metadata/{self.name}.json'
         return json.loads(path.read_text())
 
     @cached_property
