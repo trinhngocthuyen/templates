@@ -10,17 +10,17 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/psf/black
-    rev: 22.6.0
+    rev: 24.1.1
     hooks:
       - id: black
         files: ^(src|tests)
   - repo: https://github.com/PyCQA/isort
-    rev: 5.12.0
+    rev: 5.13.2
     hooks:
       - id: isort
         files: ^(src|tests)
   - repo: https://github.com/PyCQA/autoflake
-    rev: v1.4
+    rev: v2.2.1
     hooks:
       - id: autoflake
         args: ['-r', '-i', '--remove-all-unused-imports', '--remove-unused-variables']
