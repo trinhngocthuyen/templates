@@ -5,7 +5,7 @@ AllCops:
     - lib/**/*.rb
     - spec/**/*.rb
   Exclude:
-    - spec/spec_helper.rb
+    - spec/spec_helper.rb # From CocoaPods's plugin templates
 
 Gemspec/RequiredRubyVersion:
   Enabled: false
@@ -14,6 +14,11 @@ Gemspec/RequireMFA:
 
 Metrics/AbcSize:
   Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - '**/{Gem,Pod,Fast,Danger,Deliver,Guard,Snap}file'
+    - '**/cocoapods-*.rb'
 
 Style/StringLiterals:
   Enabled: false
