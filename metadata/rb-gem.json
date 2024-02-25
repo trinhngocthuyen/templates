@@ -3,6 +3,6 @@
         "name": "Name of the gem (ex. foo)"
     },
     "caveats": [
-      "You're recommended to add this following line to `.gitignore`. This is to ignore remote config files pulled in from `inherit_from` directive:\n  .rubocop-https?--*"
+      "You're recommended to add this following line to `.gitignore`.\nThis is to ignore remote config files pulled in from `inherit_from` directive:\n  .rubocop-https?--*"
     ]
 }
