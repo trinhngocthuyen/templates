@@ -2,7 +2,7 @@ AllCops:
   NewCops: enable
   SuggestExtensions: false
   Exclude:
-    - spec/spec_helper.rb # From CocoaPods's plugin templates
+    - 'spec/spec_helper.rb' # From CocoaPods's plugin templates
 
 Gemspec/RequiredRubyVersion:
   Enabled: false
