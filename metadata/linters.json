@@ -1,3 +1,6 @@
 {
-    "replace": {}
+    "replace": {},
+    "caveats": [
+      "You're recommended to add this following line to `.gitignore`.\nThis is to ignore remote config files pulled in from `inherit_from` directive:\n  .rubocop-https?--*"
+    ]
 }

@@ -2,12 +2,15 @@
 import json
 from argparse import ArgumentParser
 from functools import cached_property
+import logging
 import os
 import shutil
 from pathlib import Path
 import typing as t
 
 import jinja2
+
+logger = logging.getLogger()
 
 
 def non_empty_input(msg: str) -> str:
@@ -68,8 +71,10 @@ class Main:
             except:
                 pass
 
-    def render_content(self):
-        pass
+    def log_caveats(self):
+        caveats = self.metadata.get('caveats', [])
+        for caveat in caveats:
+            logger.warning(f'\033[33m{caveat}\033[0m')
 
     def run(self):
         ctx = self.load_replace_ctx()
@@ -87,6 +92,7 @@ class Main:
             except:
                 pass
         self.clean_up_templated_dir()
+        self.log_caveats()
 
 
 if __name__ == '__main__':
