@@ -16,6 +16,7 @@ Naming/FileName:
   Exclude:
     - '**/{Gem,Pod,Fast,Danger,Deliver,Guard,Snap}file'
     - '**/cocoapods-*.rb'
+    - '**/*.podspec'
 
 Style/StringLiterals:
   Enabled: false
