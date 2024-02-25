@@ -14,6 +14,11 @@ function templates {
         return 1
     }
 
+    case "$command" in
+        update) ;;
+        *) _templates::auto-update ;;
+    esac
+
     _templates::$command "$@"
 }
 
@@ -27,6 +32,7 @@ Available commands:
     list                List available templates
     use <template>      Use a template
     update              Update templates
+    reload              Reload the CLI
 EOF
 }
 
@@ -59,5 +65,29 @@ function _templates::use {
 }
 
 function _templates::update {
+    date +%s > ~/.templates_last_update
     env TEMPLATES_DIR="$(_templates::dir)" zsh $(_templates::dir)/scripts/upgrade.sh
+    _templates::reload
+}
+
+function _templates::auto-update {
+    local last_update=0
+    if [[ -f ~/.templates_last_update ]]; then
+        last_update=$(cat ~/.templates_last_update)
+    fi
+    local duration=$(expr $(date +%s) - ${last_update})
+    if [[ ${duration} -gt 259200 ]]; then # 3 days
+        echo -n "Would you like to update templates? [Y/n] "
+        read -r -k 1 option
+        [[ "$option" = $'\n' ]] || echo
+        case "$option" in
+            [yY$'\n']) _templates::update ;;
+            [nN]) date +%s > ~/.templates_last_update ;&
+            *) echo "You can update manually by running \`templates update\`" ;;
+        esac
+    fi
+}
+
+function _templates::reload {
+    omz reload # Just trigger `omz reload`
 }

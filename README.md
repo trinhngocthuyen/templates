@@ -13,9 +13,11 @@ Then, you can use the `templates` CLI (see [the next section](#using-the-cli))
 
 | CLI   | Description |
 |------------|-------------|
+| `templates help` | Print the usage |
 | `templates list` | List available templates |
 | `templates use <template>` | Use a template |
 | `templates update` | Update templates |
+| `templates reload` | Reload the CLI |
 
 ## Available Templates
 

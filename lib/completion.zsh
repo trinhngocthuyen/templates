@@ -5,6 +5,7 @@ function _templates {
         'list:List available templates'
         'use:Use a template'
         'update:Update templates'
+        'reload:Reload the CLI'
     )
     if (( CURRENT == 2 )); then
         _describe 'command' cmds
