@@ -32,3 +32,5 @@ Style/HashSyntax:
   EnforcedStyle: no_mixed_keys
 Style/WordArray:
   Enabled: false
+Style/PerlBackrefs:
+  Enabled: false
