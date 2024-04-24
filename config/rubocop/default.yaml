@@ -36,3 +36,10 @@ Style/WordArray:
   Enabled: false
 Style/PerlBackrefs:
   Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
