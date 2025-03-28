@@ -1,1 +1,1 @@
-require "{{name}}/gem_version"
+require "{{name}}/main"
